@@ -3,16 +3,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ceyoniq</groupId>
-    <artifactId>napple-rest-client-native</artifactId>
+    <artifactId>client-feign</artifactId>
     <version>1.0.0</version>
     <name>Rest Client for Ceyoniq Application Layer</name>
+
+    <parent>
+        <groupId>com.ceyoniq</groupId>
+        <artifactId>openapi-client-multi</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <openapi.generator.version>7.17.0</openapi.generator.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <jackson.version>2.20.1</jackson.version>
+        <openfeign.version>13.6</openfeign.version>
     </properties>
     <dependencies>
         <!-- runtime helper dependencies you may need for wrappers -->
@@ -35,21 +41,27 @@
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-hc5</artifactId>
+            <version>${openfeign.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-gson</artifactId>
+            <version>${openfeign.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.8</version>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+            <version>${openfeign.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form</artifactId>
+            <version>3.8.0</version>
         </dependency>
 
     </dependencies>
@@ -88,10 +100,9 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <!-- The spec file you will replace -->
-                            <inputSpec>${project.basedir}/src/main/resources/openapi.json</inputSpec>
+                            <inputSpec>${project.parent.basedir}/src/main/resources/openapi.json</inputSpec>
                             <generatorName>java</generatorName>
-                            <library>native</library>
+                            <library>feign-hc5</library>
                             <apiPackage>com.ceyoniq.client.api</apiPackage>
                             <modelPackage>com.ceyoniq.client.model</modelPackage>
                             <invokerPackage>com.ceyoniq.client.invoker</invokerPackage>
@@ -103,6 +114,7 @@
                                 <useBeanValidation>true</useBeanValidation>
                                 <useJakartaEe>true</useJakartaEe>
                                 <generateBuilders>true</generateBuilders>
+                                <serializationLibrary>gson</serializationLibrary>
                             </configOptions>
                         </configuration>
                     </execution>

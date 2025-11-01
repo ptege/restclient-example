@@ -3,10 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ceyoniq</groupId>
-    <artifactId>napple-rest-client-okhttp-gson</artifactId>
+    <artifactId>client-okhttp-gson</artifactId>
     <version>1.0.0</version>
     <name>Rest Client for Ceyoniq Application Layer</name>
+
+    <parent>
+        <groupId>com.ceyoniq</groupId>
+        <artifactId>openapi-client-multi</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <openapi.generator.version>7.17.0</openapi.generator.version>
@@ -93,14 +99,12 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <!-- The spec file you will replace -->
-                            <inputSpec>${project.basedir}/src/main/resources/openapi.json</inputSpec>
                             <generatorName>java</generatorName>
                             <library>okhttp-gson</library>
                             <apiPackage>com.ceyoniq.client.api</apiPackage>
                             <modelPackage>com.ceyoniq.client.model</modelPackage>
                             <invokerPackage>com.ceyoniq.client.invoker</invokerPackage>
-                            <output>${project.build.directory}/generated-sources/openapi</output>
-                            <artifactId>napple-rest-client-okhttp-gson</artifactId>
+                            <inputSpec>${project.parent.basedir}/src/main/resources/openapi.json</inputSpec>
                             <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers>
                             <configOptions>
                                 <generateClientAsBean>true</generateClientAsBean>
